@@ -1,0 +1,15 @@
+packages:
+  - "packages/*"
+
+allowBuilds:
+  '@clerk/shared': set this to true or false
+  '@nestjs/core': set this to true or false
+  cos-js-sdk-v5: set this to true or false
+  es5-ext: set this to true or false
+  msgpackr-extract: set this to true or false
+  sharp: set this to true or false
+  unrs-resolver: set this to true or false
+
+hoist-pattern:
+  packages/aigotools:
+    - "*@nextui-org/*"

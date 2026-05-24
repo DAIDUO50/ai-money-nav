@@ -1,0 +1,63 @@
+# 依赖
+node_modules
+.pnpm-store
+
+# 环境配置文件（包含敏感信息）
+.env
+.env.local
+.env.prod
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 构建产物
+.next
+dist
+build
+*.tsbuildinfo
+
+# 日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 编辑器
+.vscode/settings.json
+.idea
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 数据卷（保留gitkeep）
+.volumes/*
+!.volumes/.gitkeep
+!.volumes/**/.gitkeep
+!.volumes/mongo/.gitkeep
+!.volumes/redis/.gitkeep
+!.volumes/minio/.gitkeep
+
+# 临时文件
+*.tmp
+*.temp
+tmp/
+temp/
+
+# 测试覆盖
+coverage
+.nyc_output
+
+# 环境变量
+.env*.local
+
+# 调试
+debug.log
+
+# 密钥文件
+*.pem
+*.key
+*.crt
