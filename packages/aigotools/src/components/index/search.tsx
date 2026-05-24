@@ -106,6 +106,27 @@ export default function Search({
     </Dropdown>
   ) : null;
 
+  const hotSearches = [
+    "ChatGPT",
+    "Midjourney",
+    "DALL-E",
+    "Claude",
+    "Gemini",
+    "Stable Diffusion",
+    "Sora",
+    "Suno",
+  ];
+
+  const handleHotSearch = (term: string) => {
+    setValue(term);
+    saveHistories(term);
+    let url = `/search?s=${encodeURIComponent(term)}`;
+    if (category) {
+      url += `&c=${encodeURIComponent(category)}`;
+    }
+    router.push(url);
+  };
+
   return (
     <Container className={clsx("mt-6 sm:mt-10", className)}>
       <div className="max-w-[600px] mx-auto text-center relative">
@@ -126,7 +147,7 @@ export default function Search({
               input:
                 "text-center font-semibold placeholder:transition-all placeholder:text-primary-300 placeholder:font-semibold group-hover:placeholder:text-primary-400 group-data-[focus=true]:placeholder:text-primary-400",
               mainWrapper: "group",
-              inputWrapper: "!border-primary-900",
+              inputWrapper: "!border-primary-900 group-data-[focus=true]:border-transparent group-data-[focus=true]:bg-gradient-to-r group-data-[focus=true]:from-blue-500 group-data-[focus=true]:to-purple-500 group-data-[focus=true]:p-[2px] group-data-[focus=true]:rounded-full",
             }}
             endContent={history}
             placeholder={t("searchPlaceholder")}
@@ -144,6 +165,22 @@ export default function Search({
             onValueChange={setValue}
           />
         </form>
+      </div>
+      {/* Hot Search Tags */}
+      <div className="mt-6 mb-4">
+        <div className="text-sm text-default-500 mb-2">{t("hotSearch")}</div>
+        <div className="flex flex-wrap justify-center gap-2">
+          {hotSearches.map((term) => (
+            <button
+              key={term}
+              type="button"
+              onClick={() => handleHotSearch(term)}
+              className="px-4 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-full hover:opacity-90 transition-all hover:scale-105 active:scale-95"
+            >
+              {term}
+            </button>
+          ))}
+        </div>
       </div>
       {featuredCategories.length > 0 && (
         <div className="mt-6 flex flex-wrap justify-center gap-2">

@@ -79,10 +79,14 @@ export async function searchSites({
   search,
   page,
   category,
+  pricing = "all",
+  rating = 0,
 }: {
   search: string;
   category: string;
   page: number;
+  pricing?: "all" | "free" | "paid";
+  rating?: number;
 }) {
   try {
     await dbConnect();
@@ -99,6 +103,18 @@ export async function searchSites({
 
     if (category) {
       query.categories = (await CategoryModel.findOne({ name: category }))?._id;
+    }
+
+    // Pricing filter
+    if (pricing === "free") {
+      query.pricingType = "free";
+    } else if (pricing === "paid") {
+      query.pricingType = { $ne: "free" };
+    }
+
+    // Rating filter
+    if (rating > 0) {
+      query.rating = { $gte: rating };
     }
 
     const regFindSites = search
@@ -145,7 +161,7 @@ export async function searchSites({
   } catch (error) {
     console.log("Search sites error", error);
 
-    const { sites, total } = searchSeedSites({ search, category, page });
+    const { sites, total } = searchSeedSites({ search, category, page, pricing, rating });
 
     return {
       page,

@@ -2814,13 +2814,27 @@ export function searchSeedSites({
   search,
   category,
   page,
+  pricing = "all",
+  rating = 0,
 }: {
   search: string;
   category: string;
   page: number;
+  pricing?: "all" | "free" | "paid";
+  rating?: number;
 }): { sites: Site[]; total: number } {
   const pageSize = 24;
   let filtered = SEED_SITES.filter((s) => s.state === SiteState.published);
+
+  // Pricing filter
+  if (pricing === "free") {
+    filtered = filtered.filter((s) => s.pricingType?.includes("免费"));
+  } else if (pricing === "paid") {
+    filtered = filtered.filter((s) => !s.pricingType?.includes("免费"));
+  }
+
+  // Rating filter (skip for seed data as it doesn't have rating field)
+  // TODO: Add rating field to seed data if needed
 
   if (category) {
     filtered = filtered.filter((s) =>

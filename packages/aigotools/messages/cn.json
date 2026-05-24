@@ -19,17 +19,19 @@
     }
   },
   "footer": {
-    "slogan": "探索 10000+ AI 工具，提升你的工作效率",
-    "tagline": "收录最全面的 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手",
+    "slogan": "AIGC 导航 - 发现最好的 AI 工具",
+    "tagline": "收录最全面的 AI 工具，包括 AI 聊天、AI 绘画、AI 写作、AI 编程等",
     "allRightsReserved": "保留所有权利。",
     "allCategories": "全部分类",
-    "submitATool": "提交工具",
+    "submitATool": "免费提交工具",
     "aboutUs": "关于我们",
     "contactUs": "联系我们",
     "privacy": "隐私政策",
     "latestSubmit": "最新工具",
     "featured": "精选推荐",
-    "blogs": "博客"
+    "blogs": "博客",
+    "quickLinks": "快速链接",
+    "followUs": "关注我们"
   },
   "upload": {
     "uploadFailed": "上传文件失败"

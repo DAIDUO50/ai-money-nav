@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { Button, Spinner } from "@nextui-org/react";
@@ -20,6 +21,25 @@ export default function InfiniteSearch() {
   const category = decodeURIComponent(searchParams.get("c") || "");
   const t = useTranslations("search");
 
+  // Filter states
+  const [pricingFilter, setPricingFilter] = useState<"all" | "free" | "paid">("all");
+  const [ratingFilter, setRatingFilter] = useState<number>(0);
+
+  // Pricing filter buttons
+  const pricingFilters = [
+    { key: "all" as const, label: t("filterAll") },
+    { key: "free" as const, label: t("filterFree") },
+    { key: "paid" as const, label: t("filterPaid") },
+  ];
+
+  // Rating filter buttons  
+  const ratingFilters = [
+    { key: 0, label: t("filterAll") },
+    { key: 4, label: t("filterRating4") },
+    { key: 3, label: t("filterRating3") },
+    { key: 2, label: t("filterRating2") },
+  ];
+
   const {
     data,
     fetchNextPage,
@@ -28,9 +48,9 @@ export default function InfiniteSearch() {
     isFetchingNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ["search-sites"],
+    queryKey: ["search-sites", search, category, pricingFilter, ratingFilter],
     queryFn: async ({ pageParam }) => {
-      return await searchSites({ search, page: pageParam, category });
+      return await searchSites({ search, page: pageParam, category, pricing: pricingFilter, rating: ratingFilter });
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
@@ -49,7 +69,7 @@ export default function InfiniteSearch() {
 
   useEffect(() => {
     refetch({});
-  }, [search, refetch, category]);
+  }, [search, refetch, category, pricingFilter, ratingFilter]);
 
   const sites =
     data?.pages.reduce((t, c) => t.concat(c.sites), [] as Site[]) || [];
@@ -57,6 +77,48 @@ export default function InfiniteSearch() {
   return (
     <>
       <Search category={category} className="sm:mt-12" defaultSearch={search} />
+      
+      {/* Filter Chips */}
+      <div className="max-w-4xl mx-auto px-4 mt-6 mb-4">
+        {/* Pricing Filter */}
+        <div className="flex flex-wrap gap-2 mb-3">
+          <span className="text-sm text-default-500 mr-2 self-center">{t("pricing")}:</span>
+          {pricingFilters.map((filter) => (
+            <button
+              key={filter.key}
+              type="button"
+              onClick={() => setPricingFilter(filter.key)}
+              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+                pricingFilter === filter.key
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md"
+                  : "bg-default-100 text-default-600 hover:bg-default-200"
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+        
+        {/* Rating Filter */}
+        <div className="flex flex-wrap gap-2">
+          <span className="text-sm text-default-500 mr-2 self-center">{t("rating")}:</span>
+          {ratingFilters.map((filter) => (
+            <button
+              key={filter.key}
+              type="button"
+              onClick={() => setRatingFilter(filter.key)}
+              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+                ratingFilter === filter.key
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md"
+                  : "bg-default-100 text-default-600 hover:bg-default-200"
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      
       <SiteGroup sites={sites} title={t("result")} />
       <div className="flex justify-center mt-8">
         {isFetching || isFetchingNextPage ? (

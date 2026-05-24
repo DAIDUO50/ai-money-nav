@@ -19,7 +19,7 @@
     }
   },
   "footer": {
-    "slogan": "Explore 10000+ AI Tools to Boost Your Productivity",
+    "slogan": "AIGC Navigation - Discover the Best AI Tools",
     "tagline": "The most comprehensive AI tools directory: Chatbots, Image Generation, Writing, Coding, and more.",
     "allRightsReserved": "All rights reserved.",
     "allCategories": "All Categories",
@@ -29,7 +29,9 @@
     "privacy": "Privacy Policy",
     "latestSubmit": "Latest Tools",
     "featured": "Featured",
-    "blogs": "Blogs"
+    "blogs": "Blogs",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us"
   },
   "upload": {
     "uploadFailed": "Upload file failed"
