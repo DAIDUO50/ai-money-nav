@@ -19,12 +19,12 @@ export default function CategoriesList() {
 
   // AI categories to feature at top
   const aiCategories = [
-    { name: "AI聊天", icon: "🤖", href: "/search?c=AI聊天" },
-    { name: "AI图像", icon: "🎨", href: "/search?c=AI图像" },
-    { name: "AI写作", icon: "📝", href: "/search?c=AI写作" },
-    { name: "AI编程", icon: "💻", href: "/search?c=AI编程" },
-    { name: "AI企业", icon: "🏢", href: "/search?c=AI企业" },
-    { name: "AI学习", icon: "📚", href: "/search?c=AI学习" },
+    { name: "AI对话", icon: "🤖", href: "/categories?c=AI对话" },
+    { name: "AI制图", icon: "🎨", href: "/categories?c=AI制图" },
+    { name: "AI写作", icon: "📝", href: "/categories?c=AI写作" },
+    { name: "AI编程", icon: "💻", href: "/categories?c=AI编程" },
+    { name: "AI办公", icon: "🏢", href: "/categories?c=AI办公" },
+    { name: "AI教育", icon: "📚", href: "/categories?c=AI教育" },
   ];
 
   return (
@@ -71,7 +71,7 @@ export default function CategoriesList() {
                       key={item._id}
                       variant={isHot ? "hot" : isNew ? "new" : "default"}
                       onClick={() => {
-                        const url = `/search?c=${encodeURIComponent(
+                        const url = `/categories?c=${encodeURIComponent(
                           item.name
                         )}`;
 

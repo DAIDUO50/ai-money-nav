@@ -1,3 +1,4 @@
+"use client";
 import { Istok_Web } from "next/font/google";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";

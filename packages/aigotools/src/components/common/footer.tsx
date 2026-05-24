@@ -1,3 +1,4 @@
+"use client";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { Divider, Link as NextUILink } from "@nextui-org/react";

@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import { Image } from "@nextui-org/react";
-import { ExternalLink, ThumbsUpIcon, Bot, Heart, Star } from "lucide-react";
+import { ExternalLink, ThumbsUpIcon, Bot, Heart, Star, ImageIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Site } from "@/models/site";
@@ -10,6 +10,7 @@ import { useRouter } from "@/navigation";
 export default function SiteCard({ site }: { site: Site }) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const rating = site.rating || 4.0;
 
   const getPricingColor = (pricingType: string) => {
@@ -35,10 +36,11 @@ export default function SiteCard({ site }: { site: Site }) {
           alt={site.name}
           classNames={{
             wrapper: "w-full !max-w-full",
-            img: "w-full aspect-video object-fill",
+            img: "w-full aspect-video object-cover",
           }}
           radius="none"
-          src={site.snapshot}
+          src={getValidSnapshotUrl(site)}
+          fallback={<SnapshotFallback name={site.name} />}
         />
         {/* Pricing badge */}
         <span
@@ -71,15 +73,7 @@ export default function SiteCard({ site }: { site: Site }) {
         <div className="flex justify-between items-start gap-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
-              {site.icon ? (
-                <img
-                  src={site.icon.startsWith("http") ? site.icon : `https://www.google.com/s2/favicons?domain=${site.url}&sz=64`}
-                  alt={site.name}
-                  className="w-6 h-6 object-contain"
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).nextElementSibling?.classList.remove("hidden"); }}
-                />
-              ) : null}
-              <Bot size={24} className={site.icon ? "text-primary-600 hidden" : "text-purple-500"} />
+              <SiteIcon site={site} />
             </div>
             <div
               className={clsx(
@@ -139,5 +133,60 @@ export default function SiteCard({ site }: { site: Site }) {
         )}
       </div>
     </div>
+  );
+}
+
+/** Get a valid snapshot URL, fallback to gradient placeholder */
+function getValidSnapshotUrl(site: Site): string {
+  const snapshot = site.snapshot;
+  if (!snapshot) return "";
+  // Skip known placeholder services that may be blocked/slow
+  if (snapshot.includes("placehold.co") || snapshot.includes("via.placeholder")) {
+    return "";
+  }
+  return snapshot;
+}
+
+/** Fallback component when snapshot image fails to load */
+function SnapshotFallback({ name }: { name: string }) {
+  return (
+    <div className="w-full aspect-video bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 flex items-center justify-center">
+      <div className="text-center">
+        <ImageIcon size={32} className="mx-auto text-purple-400/50 mb-2" />
+        <span className="text-sm text-default-400 font-medium">{name}</span>
+      </div>
+    </div>
+  );
+}
+
+/** Site icon with favicon fallback */
+function SiteIcon({ site }: { site: Site }) {
+  const [iconError, setIconError] = useState(false);
+
+  // Determine icon source
+  let iconSrc: string | null = null;
+  if (site.icon && !iconError) {
+    if (site.icon.startsWith("http") || site.icon.startsWith("data:")) {
+      iconSrc = site.icon;
+    } else if (site.icon.startsWith("logos:") || site.icon.startsWith("simple-icons:")) {
+      // Iconify format - use favicon as fallback
+      iconSrc = `https://www.google.com/s2/favicons?domain=${site.url}&sz=64`;
+    } else {
+      iconSrc = site.icon;
+    }
+  }
+
+  // No valid icon or error - show default bot icon
+  if (!iconSrc || iconError) {
+    return <Bot size={24} className="text-purple-500" />;
+  }
+
+  return (
+    <img
+      src={iconSrc}
+      alt={site.name}
+      className="w-6 h-6 object-contain"
+      onError={() => setIconError(true)}
+    />
   );
 }

@@ -93,6 +93,7 @@
   "search": {
     "metadata": { "title": "搜索 AI 工具" },
     "result": "搜索结果",
+    "resultCount": "找到 {count} 个工具",
     "empty": "暂无结果，换个关键词试试",
     "loadMore": "加载更多",
     "loadFailed": "加载失败",
@@ -236,6 +237,7 @@
     "aiCategories": "AI 分类",
     "hot": "🔥热门",
     "new": "🆕新品",
-    "viewMore": "查看更多"
+    "viewMore": "查看更多",
+    "noTools": "该分类下暂无工具"
   }
 }

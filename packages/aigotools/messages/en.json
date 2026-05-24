@@ -93,6 +93,7 @@
   "search": {
     "metadata": { "title": "Search AI Tools" },
     "result": "Search Results",
+    "resultCount": "Found {count} tools",
     "empty": "No results found, try a different keyword",
     "loadMore": "Load More",
     "loadFailed": "Load Failed",
@@ -236,6 +237,7 @@
     "aiCategories": "AI Categories",
     "hot": "🔥Hot",
     "new": "🆕New",
-    "viewMore": "View More"
+    "viewMore": "View More",
+    "noTools": "No tools in this category yet"
   }
 }

@@ -14,20 +14,20 @@ const NAV_ITEMS = [
   { key: "home", href: "/", icon: Home },
   { 
     key: "aiChat", 
-    href: "/search?c=AI聊天", 
+    href: "/categories?c=AI对话", 
     icon: MessageSquare,
     emoji: "🤖",
     children: [
-      { key: "generalChat", href: "/search?c=AI聊天&sub=通用对话" },
-      { key: "marketingCopy", href: "/search?c=AI聊天&sub=营销文案" },
-      { key: "academic", href: "/search?c=AI聊天&sub=学术辅助" },
+      { key: "generalChat", href: "/categories?c=AI对话&sub=通用对话" },
+      { key: "marketingCopy", href: "/categories?c=AI写作" },
+      { key: "academic", href: "/categories?c=AI教育" },
     ]
   },
-  { key: "aiImage", href: "/search?c=AI图像", icon: Palette, emoji: "🎨" },
-  { key: "aiWriting", href: "/search?c=AI写作", icon: PenTool, emoji: "📝" },
-  { key: "aiCode", href: "/search?c=AI编程", icon: Code, emoji: "💻" },
-  { key: "aiEnterprise", href: "/search?c=AI企业", icon: Building2, emoji: "🏢" },
-  { key: "aiLearning", href: "/search?c=AI学习", icon: BookOpen, emoji: "📚" },
+  { key: "aiImage", href: "/categories?c=AI制图", icon: Palette, emoji: "🎨" },
+  { key: "aiWriting", href: "/categories?c=AI写作", icon: PenTool, emoji: "📝" },
+  { key: "aiCode", href: "/categories?c=AI编程", icon: Code, emoji: "💻" },
+  { key: "aiEnterprise", href: "/categories?c=AI办公", icon: Building2, emoji: "🏢" },
+  { key: "aiLearning", href: "/categories?c=AI教育", icon: BookOpen, emoji: "📚" },
 ];
 
 export default function Header({ className }: { className?: string }) {

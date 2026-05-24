@@ -15,7 +15,7 @@ import { searchSites } from "@/lib/actions";
 import SiteGroup from "@/components/common/sites-group";
 import { Site } from "@/models/site";
 
-export default function InfiniteSearch() {
+export default function InfiniteSearch({ showSearchBox = false }: { showSearchBox?: boolean }) {
   const searchParams = useSearchParams();
   const search = decodeURIComponent(searchParams.get("s") || "");
   const category = decodeURIComponent(searchParams.get("c") || "");
@@ -74,8 +74,11 @@ export default function InfiniteSearch() {
   const sites =
     data?.pages.reduce((t, c) => t.concat(c.sites), [] as Site[]) || [];
 
+  const totalCount = data?.pages[0]?.total || sites.length;
+
   return (
     <>
+      {showSearchBox && <Search category={category} className="sm:mt-12" defaultSearch={search} />}
       <Search category={category} className="sm:mt-12" defaultSearch={search} />
       
       {/* Filter Chips */}
@@ -119,7 +122,14 @@ export default function InfiniteSearch() {
         </div>
       </div>
       
-      <SiteGroup sites={sites} title={t("result")} />
+      {/* Result count */}
+      {search || category ? (
+        <div className="max-w-4xl mx-auto px-4 mt-4 mb-2 text-sm text-default-500">
+          {t("resultCount", { count: totalCount })}
+        </div>
+      ) : null}
+      
+      <SiteGroup sites={sites} title={search || category ? t("result") : ""} />
       <div className="flex justify-center mt-8">
         {isFetching || isFetchingNextPage ? (
           <Spinner className="my-24" />
