@@ -1,26 +1,26 @@
 {
   "header": {
-    "submit": "提交工具",
-    "login": "登录",
-    "admin": "管理员",
-    "dashboard": "控制台",
-    "logout": "退出登录",
+    "submit": "Submit Tool",
+    "login": "Login",
+    "admin": "Admin",
+    "dashboard": "Dashboard",
+    "logout": "Logout",
     "nav": {
       "home": "Home",
-      "aiMoney": "AI Money",
-      "aiVideo": "AI Video",
-      "aiWriting": "AI Writing",
-      "aiImage": "AI Image",
-      "aiAuto": "AI Automation",
-      "aiOffice": "AI Office",
+      "aiChat": "🤖 AI Chat",
+      "aiImage": "🎨 AI Image",
+      "aiWriting": "📝 AI Writing",
+      "aiCode": "💻 AI Coding",
+      "aiEnterprise": "🏢 AI Enterprise",
+      "aiLearning": "📚 AI Learning",
       "generalChat": "General Chat",
       "marketingCopy": "Marketing Copy",
       "academic": "Academic"
     }
   },
   "footer": {
-    "slogan": "Discover the best AI tools for making money",
-    "tagline": "AI Side Hustle Tools · AI Automation Navigation",
+    "slogan": "Explore 10000+ AI Tools to Boost Your Productivity",
+    "tagline": "The most comprehensive AI tools directory: Chatbots, Image Generation, Writing, Coding, and more.",
     "allRightsReserved": "All rights reserved.",
     "allCategories": "All Categories",
     "submitATool": "Submit a Tool",
@@ -40,27 +40,32 @@
     "categoryManage": "Category Manage"
   },
   "index": {
-    "slogan": "发现真正能赚钱的 AI 工具",
-    "subtitle": "收录 AI副业、AI短视频、AI自动化、AI写作、AI绘图等热门工具。",
-    "exploreBtn": "开始探索",
-    "latestBtn": "最新AI工具",
-    "featured": "精选推荐",
-    "latest": "最新工具",
-    "searchPlaceholder": "搜索 AI 赚钱工具...",
-    "clearAll": "清除全部",
-    "more": "更多分类 +",
-    "categories": "分类",
-    "search": "搜索",
-    "free": "免费",
-    "paid": "付费",
-    "pricing": "定价"
+    "slogan": "Explore 10000+ AI Tools to Boost Your Productivity",
+    "subtitle": "The most comprehensive AI tools directory: Chatbots, Image Generation, Writing, Coding, and more.",
+    "exploreBtn": "Start Exploring",
+    "latestBtn": "Latest AI Tools",
+    "featured": "Featured",
+    "latest": "Latest Tools",
+    "searchPlaceholder": "Search AI writing tools, AI art, AI chat...",
+    "clearAll": "Clear All",
+    "more": "More Categories +",
+    "categories": "Categories",
+    "search": "Search",
+    "free": "Free",
+    "paid": "Paid",
+    "pricing": "Pricing",
+    "favorite": "Favorite",
+    "share": "Share",
+    "rating": "Rating",
+    "hotSearch": "Hot Search",
+    "trending": "Trending"
   },
   "metadata": {
-    "title": "AI搞钱导航 - AI副业与赚钱工具导航",
-    "description": "收录最好用的 AI 赚钱工具、AI副业工具、AI短视频工具、AI自动化工具，帮助普通人利用 AI 提升收入。",
-    "keywords": "AI赚钱, AI副业, AI工具导航, AI自动化, AI短视频工具, ChatGPT赚钱, AI自媒体",
-    "ogTitle": "AI搞钱导航 - AI副业与赚钱工具导航",
-    "ogDescription": "收录最好用的 AI 赚钱工具、AI副业工具、AI短视频工具、AI自动化工具，帮助普通人利用 AI 提升收入。"
+    "title": "AIGC Navigation - AI Tools Directory",
+    "description": "Discover and explore the most comprehensive AI tools including AI chatbots, AI image generation, AI writing tools, AI coding assistants. Free and paid tools all covered.",
+    "keywords": "AI tools,AIGC,AI navigation,ChatGPT,Midjourney,Claude,Gemini,Stable Diffusion,AI chat,AI art,AI writing,AI coding",
+    "ogTitle": "AIGC Navigation - Explore 10000+ AI Tools",
+    "ogDescription": "Discover and explore the most comprehensive AI tools including AI chatbots, AI image generation, AI writing tools, AI coding assistants. Free and paid tools all covered."
   },
   "site": {
     "categories": "Categories",
@@ -78,29 +83,38 @@
     "docPage": "Documentation",
     "pricingPage": "Pricing",
     "relatedSearches": "Related Searches",
-    "home": "Home"
+    "home": "Home",
+    "similarRecommend": "Similar Tools",
+    "favorite": "Favorite",
+    "share": "Share"
   },
   "search": {
-    "metadata": { "title": "搜索 AI 工具" },
-    "result": "搜索结果",
-    "empty": "暂无结果，换个关键词试试",
-    "loadMore": "加载更多",
-    "loadFailed": "加载失败"
+    "metadata": { "title": "Search AI Tools" },
+    "result": "Search Results",
+    "empty": "No results found, try a different keyword",
+    "loadMore": "Load More",
+    "loadFailed": "Load Failed",
+    "filterAll": "All",
+    "filterFree": "Free",
+    "filterPaid": "Paid",
+    "filterRating4": "⭐4+",
+    "filterRating3": "⭐3+",
+    "filterRating2": "⭐2+"
   },
   "submit": {
-    "metadata": { "title": "提交 AI 工具" },
-    "title": "提交你的 AI 工具",
-    "subTitle": "一键提交，让更多人发现你的工具",
-    "websiteName": "工具名称",
-    "websiteNamePlaceholder": "AI搞钱导航",
-    "websiteUrl": "网站地址",
+    "metadata": { "title": "Submit AI Tool" },
+    "title": "Submit Your AI Tool",
+    "subTitle": "One-click submission to help more people discover your tool",
+    "websiteName": "Tool Name",
+    "websiteNamePlaceholder": "AIGC Navigation",
+    "websiteUrl": "Website URL",
     "websiteUrlPlaceholder": "https://example.com",
-    "submit": "提交",
-    "requireName": "请填写工具名称",
-    "requireUrl": "请填写网站地址",
-    "successSubmit": "提交成功",
-    "failSubmit": "提交失败，请重试或联系我们",
-    "request": "请将 {code} 添加到您的网站首页，然后您可以免费成功提交您的网站！"
+    "submit": "Submit",
+    "requireName": "Please enter tool name",
+    "requireUrl": "Please enter website URL",
+    "successSubmit": "Submission Successful",
+    "failSubmit": "Submission failed, please retry or contact us",
+    "request": "Please add {code} to your homepage, then you can submit your website for free!"
   },
   "reviewManage": {
     "title": "Review Manage",
@@ -216,6 +230,10 @@
   },
   "categories": {
     "metadata": { "title": "All Categories" },
-    "loadFailed": "Load Failed"
+    "loadFailed": "Load Failed",
+    "aiCategories": "AI Categories",
+    "hot": "🔥Hot",
+    "new": "🆕New",
+    "viewMore": "View More"
   }
 }

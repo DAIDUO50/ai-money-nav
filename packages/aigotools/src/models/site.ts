@@ -29,6 +29,7 @@ export interface SiteDocument extends mongoose.Document {
     pricing?: string;
   };
   voteCount: number;
+  rating?: number;
   metaKeywords: string[];
   metaDescription: string;
   searchSuggestWords: string[];
@@ -66,6 +67,7 @@ const SiteSchema = new mongoose.Schema<SiteDocument>({
   relatedSearches: { type: [String], default: () => [] },
   links: { type: Object, default: () => ({}) },
   voteCount: { type: Number, default: 0 },
+  rating: { type: Number, default: 4.0 },
   metaKeywords: { type: [String], default: () => [] },
   metaDescription: { type: String, default: "" },
   searchSuggestWords: { type: [String], default: () => [] },

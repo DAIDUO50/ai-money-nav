@@ -7,20 +7,20 @@
     "logout": "退出登录",
     "nav": {
       "home": "首页",
-      "aiMoney": "AI赚钱",
-      "aiVideo": "AI视频",
-      "aiWriting": "AI写作",
-      "aiImage": "AI绘图",
-      "aiAuto": "AI自动化",
-      "aiOffice": "AI办公",
+      "aiChat": "🤖 AI聊天",
+      "aiImage": "🎨 AI图像",
+      "aiWriting": "📝 AI写作",
+      "aiCode": "💻 AI编程",
+      "aiEnterprise": "🏢 AI企业",
+      "aiLearning": "📚 AI学习",
       "generalChat": "通用对话",
       "marketingCopy": "营销文案",
       "academic": "学术辅助"
     }
   },
   "footer": {
-    "slogan": "发现最赚钱的AI工具",
-    "tagline": "AI副业工具合集 · AI自动化工具导航",
+    "slogan": "探索 10000+ AI 工具，提升你的工作效率",
+    "tagline": "收录最全面的 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手",
     "allRightsReserved": "保留所有权利。",
     "allCategories": "全部分类",
     "submitATool": "提交工具",
@@ -40,27 +40,32 @@
     "categoryManage": "分类管理"
   },
   "index": {
-    "slogan": "发现真正能赚钱的 AI 工具",
-    "subtitle": "收录 AI副业、AI短视频、AI自动化、AI写作、AI绘图等热门工具。",
+    "slogan": "探索 10000+ AI 工具，提升你的工作效率",
+    "subtitle": "收录最全面的 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手",
     "exploreBtn": "开始探索",
     "latestBtn": "最新AI工具",
     "featured": "精选推荐",
     "latest": "最新工具",
-    "searchPlaceholder": "搜索 AI 赚钱工具...",
+    "searchPlaceholder": "搜索 AI 写作工具、AI 绘画、AI 聊天...",
     "clearAll": "清除全部",
     "more": "更多分类 +",
     "categories": "分类",
     "search": "搜索",
     "free": "免费",
     "paid": "付费",
-    "pricing": "定价"
+    "pricing": "定价",
+    "favorite": "收藏",
+    "share": "分享",
+    "rating": "评分",
+    "hotSearch": "热门搜索",
+    "trending": "趋势搜索"
   },
   "metadata": {
-    "title": "AI搞钱导航 - AI副业与赚钱工具导航",
-    "description": "收录最好用的 AI 赚钱工具、AI副业工具、AI短视频工具、AI自动化工具，帮助普通人利用 AI 提升收入。",
-    "keywords": "AI赚钱, AI副业, AI工具导航, AI自动化, AI短视频工具, ChatGPT赚钱, AI自媒体",
-    "ogTitle": "AI搞钱导航 - AI副业与赚钱工具导航",
-    "ogDescription": "收录最好用的 AI 赚钱工具、AI副业工具、AI短视频工具、AI自动化工具，帮助普通人利用 AI 提升收入。"
+    "title": "AIGC 导航 - AI工具大全",
+    "description": "发现并探索最全面的 AI 工具，包括 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手等。免费与付费工具全覆盖。",
+    "keywords": "AI工具,AIGC,AI导航,ChatGPT,Midjourney,Claude,Gemini,Stable Diffusion,AI聊天,AI绘画,AI写作,AI编程",
+    "ogTitle": "AIGC 导航 - 探索 10000+ AI 工具",
+    "ogDescription": "发现并探索最全面的 AI 工具，包括 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手等。免费与付费工具全覆盖。"
   },
   "site": {
     "categories": "分类",
@@ -78,21 +83,30 @@
     "docPage": "文档页",
     "pricingPage": "价格页",
     "relatedSearches": "相关搜索",
-    "home": "首页"
+    "home": "首页",
+    "similarRecommend": "同类推荐",
+    "favorite": "收藏",
+    "share": "分享"
   },
   "search": {
     "metadata": { "title": "搜索 AI 工具" },
     "result": "搜索结果",
     "empty": "暂无结果，换个关键词试试",
     "loadMore": "加载更多",
-    "loadFailed": "加载失败"
+    "loadFailed": "加载失败",
+    "filterAll": "全部",
+    "filterFree": "免费",
+    "filterPaid": "付费",
+    "filterRating4": "⭐4+",
+    "filterRating3": "⭐3+",
+    "filterRating2": "⭐2+"
   },
   "submit": {
     "metadata": { "title": "提交 AI 工具" },
     "title": "提交你的 AI 工具",
     "subTitle": "一键提交，让更多人发现你的工具",
     "websiteName": "工具名称",
-    "websiteNamePlaceholder": "AI搞钱导航",
+    "websiteNamePlaceholder": "AIGC 导航",
     "websiteUrl": "网站地址",
     "websiteUrlPlaceholder": "https://example.com",
     "submit": "提交",
@@ -216,6 +230,10 @@
   },
   "categories": {
     "metadata": { "title": "全部分类" },
-    "loadFailed": "加载失败"
+    "loadFailed": "加载失败",
+    "aiCategories": "AI 分类",
+    "hot": "🔥热门",
+    "new": "🆕新品",
+    "viewMore": "查看更多"
   }
 }

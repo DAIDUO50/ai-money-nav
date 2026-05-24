@@ -42,7 +42,19 @@ const config: Config = {
     "../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        ai: {
+          blue: '#3b82f6',
+          violet: '#8b5cf6',
+          purple: '#a855f7',
+        },
+      },
+      backgroundImage: {
+        'ai-gradient': 'linear-gradient(to right, #3b82f6, #8b5cf6)',
+        'ai-gradient-br': 'linear-gradient(to bottom right, #3b82f6, #8b5cf6, #a855f7)',
+      },
+    },
   },
   darkMode: "class",
   plugins: [

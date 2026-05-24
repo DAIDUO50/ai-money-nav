@@ -6,7 +6,7 @@ import { Link } from "@/navigation";
 
 export default function Logo({ className }: { className?: string }) {
   return (
-    <Link className="flex items-center gap-2 sm:gap-3 shrink-0" href="/">
+    <Link className="flex items-center gap-2 sm:gap-3 shrink-0 group" href="/">
       <Image
         alt={AppConfig.siteName}
         className="rounded-lg"
@@ -16,7 +16,9 @@ export default function Logo({ className }: { className?: string }) {
       />
       <span
         className={clsx(
-          "text-primary-800 font-bold text-base sm:text-xl leading-none whitespace-nowrap",
+          "font-bold text-base sm:text-xl leading-none whitespace-nowrap",
+          "bg-gradient-to-r from-blue-600 via-purple-600 to-violet-600 bg-clip-text text-transparent",
+          "group-hover:from-purple-600 group-hover:via-violet-600 group-hover:to-blue-600 transition-all duration-300",
           className,
         )}
       >

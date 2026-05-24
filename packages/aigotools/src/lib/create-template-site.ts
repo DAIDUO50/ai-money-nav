@@ -24,6 +24,7 @@ export const createTemplateSite = (site: Partial<Site> = {}) => {
     pricings: [],
     links: {},
     voteCount: 0,
+    rating: 4.0,
     metaKeywords: [],
     metaDescription: "",
     searchSuggestWords: [],

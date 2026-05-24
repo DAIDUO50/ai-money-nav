@@ -6,7 +6,7 @@ export const AppConfig = {
   appGenerator: (process.env.NEXT_PUBLIC_APP_GENERATOR as string) || "",
   appGeneratorUrl: (process.env.NEXT_PUBLIC_APP_GENERATOR_URL as string) || "",
   siteUrl: (process.env.NEXT_PUBLIC_APP_URL as string) || "",
-  siteName: (process.env.NEXT_PUBLIC_APP_NAME as string) || "AI搞钱导航",
+  siteName: (process.env.NEXT_PUBLIC_APP_NAME as string) || "AIGC 导航",
   isClerkEnabled:
     !!clerkPublishableKey &&
     !clerkPublishableKey.includes("xxx") &&

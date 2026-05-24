@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Menu, X, PenTool, Palette, Video, Briefcase, DollarSign, Home, ChevronDown } from "lucide-react";
+import { Menu, X, MessageSquare, Palette, PenTool, Code, Building2, BookOpen, Home, ChevronDown, Sparkles } from "lucide-react";
 import clsx from "clsx";
 
 import Container from "./container";
@@ -13,19 +13,21 @@ import { Link } from "@/navigation";
 const NAV_ITEMS = [
   { key: "home", href: "/", icon: Home },
   { 
-    key: "aiWriting", 
-    href: "/search?c=AI写作", 
-    icon: PenTool,
+    key: "aiChat", 
+    href: "/search?c=AI聊天", 
+    icon: MessageSquare,
+    emoji: "🤖",
     children: [
-      { key: "generalChat", href: "/search?c=AI写作&sub=通用对话" },
-      { key: "marketingCopy", href: "/search?c=AI写作&sub=营销文案" },
-      { key: "academic", href: "/search?c=AI写作&sub=学术辅助" },
+      { key: "generalChat", href: "/search?c=AI聊天&sub=通用对话" },
+      { key: "marketingCopy", href: "/search?c=AI聊天&sub=营销文案" },
+      { key: "academic", href: "/search?c=AI聊天&sub=学术辅助" },
     ]
   },
-  { key: "aiImage", href: "/search?c=AI绘图", icon: Palette },
-  { key: "aiVideo", href: "/search?c=AI视频", icon: Video },
-  { key: "aiOffice", href: "/search?c=AI办公", icon: Briefcase },
-  { key: "aiMoney", href: "/search?c=AI赚钱", icon: DollarSign },
+  { key: "aiImage", href: "/search?c=AI图像", icon: Palette, emoji: "🎨" },
+  { key: "aiWriting", href: "/search?c=AI写作", icon: PenTool, emoji: "📝" },
+  { key: "aiCode", href: "/search?c=AI编程", icon: Code, emoji: "💻" },
+  { key: "aiEnterprise", href: "/search?c=AI企业", icon: Building2, emoji: "🏢" },
+  { key: "aiLearning", href: "/search?c=AI学习", icon: BookOpen, emoji: "📚" },
 ];
 
 export default function Header({ className }: { className?: string }) {
@@ -53,21 +55,24 @@ export default function Header({ className }: { className?: string }) {
               onMouseLeave={() => setDropdownOpen(null)}
             >
               <Link
-                key={item.key}
-                className="flex items-center gap-1.5 text-sm font-medium text-primary-600 hover:text-primary-900 transition-colors whitespace-nowrap px-3 py-2 rounded-lg hover:bg-primary-50"
+                className={clsx(
+                  "flex items-center gap-1.5 text-sm font-medium text-primary-600 hover:text-primary-900 transition-all whitespace-nowrap px-3 py-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50",
+                  "hover:shadow-sm hover:shadow-purple-500/10"
+                )}
                 href={item.href}
               >
-                <item.icon size={16} />
+                {item.emoji ? <span className="text-base">{item.emoji}</span> : <item.icon size={16} />}
                 <span>{t(`nav.${item.key}`)}</span>
                 {item.children && <ChevronDown size={14} className="ml-0.5" />}
               </Link>
               
               {item.children && dropdownOpen === item.key && (
-                <div className="absolute top-full left-0 mt-1 bg-background border border-primary-200 rounded-xl shadow-lg py-1 min-w-[140px] z-50">
+                <div className="absolute top-full left-0 mt-1 bg-background border border-primary-200 rounded-xl shadow-lg py-1 min-w-[140px] z-50 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-purple-50/50 -z-10" />
                   {item.children.map((child) => (
                     <Link
                       key={child.key}
-                      className="block px-4 py-2 text-sm text-primary-700 hover:bg-primary-50 hover:text-primary-900 transition-colors whitespace-nowrap"
+                      className="block px-4 py-2 text-sm text-primary-700 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 hover:text-purple-700 transition-colors whitespace-nowrap"
                       href={child.href}
                     >
                       {t(`nav.${child.key}`)}
@@ -101,11 +106,11 @@ export default function Header({ className }: { className?: string }) {
                 <div key={item.key}>
                   <Link
                     key={item.key}
-                    className="flex items-center gap-2 text-base font-medium text-primary-700 py-2 px-3 rounded-lg hover:bg-primary-50"
+                    className="flex items-center gap-2 text-base font-medium text-primary-700 py-2 px-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
                   >
-                    <item.icon size={18} />
+                    {item.emoji ? <span className="text-lg">{item.emoji}</span> : <item.icon size={18} />}
                     <span>{t(`nav.${item.key}`)}</span>
                   </Link>
                   {item.children && (
@@ -113,7 +118,7 @@ export default function Header({ className }: { className?: string }) {
                       {item.children.map((child) => (
                         <Link
                           key={child.key}
-                          className="block text-sm text-primary-600 py-1.5 px-3 rounded-lg hover:bg-primary-50"
+                          className="block text-sm text-primary-600 py-1.5 px-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
                           href={child.href}
                           onClick={() => setMobileOpen(false)}
                         >
