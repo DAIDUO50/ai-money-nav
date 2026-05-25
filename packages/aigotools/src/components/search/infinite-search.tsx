@@ -78,8 +78,9 @@ export default function InfiniteSearch({ showSearchBox = false }: { showSearchBo
 
   return (
     <>
-      {showSearchBox && <Search category={category} className="sm:mt-12" defaultSearch={search} />}
-      <Search category={category} className="sm:mt-12" defaultSearch={search} />
+      {showSearchBox && (
+        <Search category={category} className="sm:mt-12" defaultSearch={search} />
+      )}
       
       {/* Filter Chips */}
       <div className="max-w-4xl mx-auto px-4 mt-6 mb-4">

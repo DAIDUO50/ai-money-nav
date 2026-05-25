@@ -4,8 +4,8 @@ import { ThumbsUpIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useAuth } from "@clerk/nextjs";
-import { SignInButton } from "@clerk/nextjs";
+import { useAuth, SignInButton } from "@clerk/nextjs";
+import { useClerkSafe } from "@/lib/clerk-safe";
 import clsx from "clsx";
 
 import { Site } from "@/models/site";
@@ -16,7 +16,8 @@ export default function VoteButton({ site }: { site: Site }) {
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [voteCount, setVoteCount] = useState(site.voteCount);
   const [isLoading, setIsLoading] = useState(false);
-  const { isSignedIn } = useAuth();
+  const auth = useClerkSafe();
+  const isSignedIn = auth?.isSignedIn ?? false;
 
   const triggerUpvote = async () => {
     try {

@@ -151,9 +151,23 @@ export async function searchSites({
 
     console.log({ query, sites, count });
 
+    // If MongoDB has no data, fallback to seed data
+    const allSites = [...(page === 1 ? regFindSites : []), ...sites];
+    if (allSites.length === 0 && count === 0) {
+      console.log("MongoDB empty, falling back to seed data");
+      const { sites: seedSites, total } = searchSeedSites({ search, category, page, pricing, rating });
+      return {
+        page,
+        total,
+        sites: seedSites,
+        hasNext: total > page * 24,
+      };
+    }
+
     return {
       page,
-      sites: [...(page === 1 ? regFindSites : []), ...sites]
+      total: count,
+      sites: allSites
         .map(siteToObject)
         .map(pickCategoryName),
       hasNext: count > page * pageSize,
