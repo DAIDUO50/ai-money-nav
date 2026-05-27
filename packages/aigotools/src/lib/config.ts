@@ -6,7 +6,7 @@ export const AppConfig = {
   appGenerator: (process.env.NEXT_PUBLIC_APP_GENERATOR as string) || "",
   appGeneratorUrl: (process.env.NEXT_PUBLIC_APP_GENERATOR_URL as string) || "",
   siteUrl: (process.env.NEXT_PUBLIC_APP_URL as string) || "",
-  siteName: (process.env.NEXT_PUBLIC_APP_NAME as string) || "AIGC 导航",
+  siteName: (process.env.NEXT_PUBLIC_APP_NAME as string) || "AI赚钱导航",
   isClerkEnabled:
     !!clerkPublishableKey &&
     !clerkPublishableKey.includes("xxx") &&
@@ -21,7 +21,7 @@ export const AppConfig = {
   // mongo
   mongoUri: (process.env.MONGODB_URI as string) || "",
   // image storage
-  imageStorage: process.env.NEXT_PUBLIC_IMAGE_STORAGE as "minio" | "s3" | "cos",
+  imageStorage: process.env.NEXT_PUBLIC_IMAGE_STORAGE as "minio" | "s3" | "cos" | "local",
 
   // minio
   minioBase: (process.env.MINIO_BASE as string) || "",
@@ -31,7 +31,8 @@ export const AppConfig = {
   minioUseSSL: (process.env.MINIO_SSL as string) === "true",
   minioAccessKey: (process.env.MINIO_ACCESS_KEY as string) || "",
   minioSecretKey: (process.env.MINIO_SECERT_KEY as string) || "",
-  // aws s3
+  // local file storage
+  localStorageBase: (process.env.LOCAL_STORAGE_BASE as string) || "/uploads",
   s3Base: (process.env.S3_BASE as string) || "",
   s3Region: (process.env.S3_REGION as string) || "",
   s3Bucket: (process.env.S3_BUCKET as string) || "",

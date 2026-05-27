@@ -74,6 +74,25 @@ export default function Hero() {
         <Search size={16} className="text-purple-500" />
         <span>{t("searchPlaceholder")}</span>
       </div>
+
+      {/* Quick entry pills */}
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <Link href="/search?sort=rating">
+          <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/70 dark:bg-zinc-800/70 border border-purple-200/50 dark:border-zinc-700 text-sm font-medium text-primary-700 hover:bg-purple-50 hover:border-purple-300 transition-all shadow-sm cursor-pointer">
+            ⭐ 最受好评
+          </span>
+        </Link>
+        <Link href="/search?sort=latest">
+          <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/70 dark:bg-zinc-800/70 border border-blue-200/50 dark:border-zinc-700 text-sm font-medium text-primary-700 hover:bg-blue-50 hover:border-blue-300 transition-all shadow-sm cursor-pointer">
+            🆕 最新收录
+          </span>
+        </Link>
+        <Link href="/search?pricing=免费">
+          <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/70 dark:bg-zinc-800/70 border border-green-200/50 dark:border-zinc-700 text-sm font-medium text-primary-700 hover:bg-green-50 hover:border-green-300 transition-all shadow-sm cursor-pointer">
+            🆓 免费工具
+          </span>
+        </Link>
+      </div>
     </div>
   );
 }

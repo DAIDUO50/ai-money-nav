@@ -6,6 +6,7 @@ import Container from "@/components/common/container";
 import SiteGroup from "@/components/common/sites-group";
 import NavBar from "@/components/common/nav-bar";
 import SiteDetail from "@/components/site/site-detail";
+import RecordVisitWrapper from "@/components/site/record-visit-wrapper";
 import { getSiteDetailByKey, getSiteMetadata } from "@/lib/actions";
 
 export async function generateMetadata({
@@ -59,12 +60,26 @@ export default async function Page({ params }: { params: { site: string } }) {
     );
   }
 
+  // Get breadcrumb category
+  const breadcrumbCategory = site.site.categories?.[0] || "";
+
+  // Get related by category for "看了又看" section
+  let alsoViewed: any[] = [];
+  try {
+    const { getRelatedByCategory } = await import("@/lib/actions");
+    alsoViewed = await getRelatedByCategory(params.site, 4);
+  } catch (e) { /* ignore */ }
+
   return (
     <Container className="mt-4">
-      <NavBar name={site.site.name} />
-      <SiteDetail site={site.site} />
+      <RecordVisitWrapper site={site.site} />
+      <NavBar name={breadcrumbCategory ? `${breadcrumbCategory} > ${site.site.name}` : site.site.name} />
+      <SiteDetail site={site.site} featuredSites={site.suggests.slice(0, 5)} />
       {site.suggests.length > 0 && (
         <SiteGroup sites={site.suggests} title={t("relatedTools")} />
+      )}
+      {alsoViewed.length > 0 && (
+        <SiteGroup sites={alsoViewed} title="👀 看了又看" className="mt-4" />
       )}
     </Container>
   );

@@ -54,7 +54,7 @@ export default function CategoryTable() {
 
       const result = await managerSearchCategories(searchParams);
 
-      setSearchResult(result);
+      setSearchResult(result as typeof searchResult);
     } catch (error) {
       console.log(error);
       toast.error(t("failSearch"));

@@ -34,5 +34,5 @@ export const createTemplateSite = (site: Partial<Site> = {}) => {
     processStage: ProcessStage.pending,
   };
 
-  return { newSite, ...site } as Site;
+  return { ...newSite, ...site } as Site;
 };

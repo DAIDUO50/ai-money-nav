@@ -19,11 +19,13 @@ export default function SiteGroup({
   sites,
   id,
   category,
+  className,
 }: {
   id?: string;
   title: String;
   sites: Array<Site>;
   category?: string;
+  className?: string;
 }) {
   const t = useTranslations("categories");
 
@@ -32,7 +34,7 @@ export default function SiteGroup({
   }
 
   return (
-    <Container className="mt-8 sm:mt-12 md:mt-16" id={id}>
+    <Container className={clsx("mt-8 sm:mt-12 md:mt-16", className)} id={id}>
       <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div>
           <h2 className={clsx(istokWeb.className, "text-xl sm:text-2xl font-bold tracking-tight")}>

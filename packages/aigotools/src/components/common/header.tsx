@@ -28,6 +28,7 @@ const NAV_ITEMS = [
   { key: "aiCode", href: "/categories?c=AI编程", icon: Code, emoji: "💻" },
   { key: "aiEnterprise", href: "/categories?c=AI办公", icon: Building2, emoji: "🏢" },
   { key: "aiLearning", href: "/categories?c=AI教育", icon: BookOpen, emoji: "📚" },
+  { key: "aiMoney", href: "/categories?c=AI赚钱导航", icon: Sparkles, emoji: "💰" },
 ];
 
 export default function Header({ className }: { className?: string }) {

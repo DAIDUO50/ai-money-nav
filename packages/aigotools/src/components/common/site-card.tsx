@@ -1,17 +1,27 @@
 "use client";
 import clsx from "clsx";
-import { Image } from "@nextui-org/react";
 import { ExternalLink, ThumbsUpIcon, Bot, Heart, Star, ImageIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Site } from "@/models/site";
 import { useRouter } from "@/navigation";
+import { getSiteIconUrl } from "@/lib/site-icon";
 
 export default function SiteCard({ site }: { site: Site }) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(false);
   const [imgError, setImgError] = useState(false);
   const rating = site.rating || 4.0;
+  const voteCount = site.voteCount || 0;
+
+  const getHeatBadge = () => {
+    if (voteCount > 500) return { emoji: "🔥", label: "爆火" };
+    if (voteCount > 100) return { emoji: "⬆️", label: "热门" };
+    if (voteCount > 20) return { emoji: "👍", label: "推荐" };
+    return null;
+  };
+
+  const heatBadge = getHeatBadge();
 
   const getPricingColor = (pricingType: string) => {
     if (pricingType === "免费" || pricingType === "Free") {
@@ -31,17 +41,19 @@ export default function SiteCard({ site }: { site: Site }) {
       }}
     >
       <div className="relative">
-        <Image
-          isZoomed
+      {!imgError && getValidSnapshotUrl(site) ? (
+        <img
           alt={site.name}
-          classNames={{
-            wrapper: "w-full !max-w-full",
-            img: "w-full aspect-video object-cover",
-          }}
-          radius="none"
+          className="w-full aspect-[16/10] object-cover"
           src={getValidSnapshotUrl(site)}
-          fallback={<SnapshotFallback name={site.name} />}
+          onError={(e) => {
+            setImgError(true);
+            (e.target as HTMLImageElement).style.display = 'none';
+          }}
+          loading="lazy"
         />
+      ) : null}
+      {(imgError || !getValidSnapshotUrl(site)) && <SnapshotFallback name={site.name} />}
         {/* Pricing badge */}
         <span
           className={clsx(
@@ -51,6 +63,12 @@ export default function SiteCard({ site }: { site: Site }) {
         >
           {site.pricingType}
         </span>
+        {/* Heat badge */}
+        {heatBadge && (
+          <span className="absolute top-3 right-[calc(100%-7rem)] text-white text-xs font-medium px-2 py-1 rounded-full shadow-lg bg-gradient-to-r from-orange-500 to-red-500">
+            {heatBadge.emoji} {heatBadge.label}
+          </span>
+        )}
         {/* Favorite button */}
         <button
           className={clsx(
@@ -86,7 +104,7 @@ export default function SiteCard({ site }: { site: Site }) {
             </div>
           </div>
         </div>
-        <div className="mt-2 text-primary-400 text-sm overflow-hidden text-ellipsis line-clamp-2">
+        <div className="mt-2 text-primary-400 text-sm overflow-hidden text-ellipsis line-clamp-3">
           {site.description}
         </div>
         
@@ -131,6 +149,21 @@ export default function SiteCard({ site }: { site: Site }) {
             ))}
           </div>
         )}
+        {/* Visit button on hover */}
+        <div className="mt-3 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button
+            className="text-sm font-medium text-purple-600 flex items-center gap-1 hover:text-purple-800"
+            onClick={(e) => {
+              e.stopPropagation();
+              const targetUrl = site.url || '';
+              if (targetUrl) {
+                window.open(targetUrl, '_blank', 'noopener,noreferrer');
+              }
+            }}
+          >
+            访问 <ExternalLink size={14} />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -144,37 +177,33 @@ function getValidSnapshotUrl(site: Site): string {
   if (snapshot.includes("placehold.co") || snapshot.includes("via.placeholder")) {
     return "";
   }
+  // Use thum.io screenshot - with error fallback via onError handler in img tag
+  if (snapshot.includes("thum.io")) {
+    // Return the URL - onError will show fallback if it fails
+    return snapshot;
+  }
   return snapshot;
 }
 
 /** Fallback component when snapshot image fails to load */
 function SnapshotFallback({ name }: { name: string }) {
   return (
-    <div className="w-full aspect-video bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 flex items-center justify-center">
-      <div className="text-center">
-        <ImageIcon size={32} className="mx-auto text-purple-400/50 mb-2" />
-        <span className="text-sm text-default-400 font-medium">{name}</span>
+    <div className="w-full aspect-video bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 flex items-center justify-center border-b border-gray-100">
+      <div className="text-center px-4">
+        <div className="w-16 h-16 mx-auto mb-2 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+          <Bot size={28} className="text-white" />
+        </div>
+        <span className="text-sm text-primary-500 font-medium">{name}</span>
       </div>
     </div>
   );
 }
 
-/** Site icon with favicon fallback */
+/** Site icon with Iconify and favicon fallback */
 function SiteIcon({ site }: { site: Site }) {
   const [iconError, setIconError] = useState(false);
 
-  // Determine icon source
-  let iconSrc: string | null = null;
-  if (site.icon && !iconError) {
-    if (site.icon.startsWith("http") || site.icon.startsWith("data:")) {
-      iconSrc = site.icon;
-    } else if (site.icon.startsWith("logos:") || site.icon.startsWith("simple-icons:")) {
-      // Iconify format - use favicon as fallback
-      iconSrc = `https://www.google.com/s2/favicons?domain=${site.url}&sz=64`;
-    } else {
-      iconSrc = site.icon;
-    }
-  }
+  const iconSrc = getSiteIconUrl(site.icon, site.url);
 
   // No valid icon or error - show default bot icon
   if (!iconSrc || iconError) {
@@ -187,6 +216,7 @@ function SiteIcon({ site }: { site: Site }) {
       alt={site.name}
       className="w-6 h-6 object-contain"
       onError={() => setIconError(true)}
+      loading="lazy"
     />
   );
 }

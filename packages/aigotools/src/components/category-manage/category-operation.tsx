@@ -8,7 +8,8 @@ import {
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, Eye } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import OperationIcon from "@/components/common/operation-icon";
 import { deleteCategory } from "@/lib/actions";
@@ -24,8 +25,13 @@ export default function CategoryOperation({
   onEdit: () => void;
 }) {
   const t = useTranslations("categoryManage");
+  const router = useRouter();
 
   const [deleting, setDeleting] = useState(false);
+
+  const handleViewSites = useCallback(() => {
+    router.push(`/dashboard/category-sites/${category._id}`);
+  }, [category._id, router]);
 
   const handleDelete = useCallback(async () => {
     if (deleting) {
@@ -55,6 +61,14 @@ export default function CategoryOperation({
         </Button>
       </DropdownTrigger>
       <DropdownMenu>
+        <DropdownItem
+          key="view"
+          className="text-primary-500"
+          startContent={<Eye size={14} />}
+          onClick={handleViewSites}
+        >
+          {t("viewSites") || "查看网站"}
+        </DropdownItem>
         <DropdownItem
           key="edit"
           className="text-yellow-500"

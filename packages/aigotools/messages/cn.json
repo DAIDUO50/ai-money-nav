@@ -13,6 +13,7 @@
       "aiCode": "💻 AI编程",
       "aiEnterprise": "🏢 AI企业",
       "aiLearning": "📚 AI学习",
+      "aiMoney": "💰 AI赚钱导航",
       "generalChat": "通用对话",
       "marketingCopy": "营销文案",
       "academic": "学术辅助"
@@ -37,13 +38,48 @@
     "uploadFailed": "上传文件失败"
   },
   "dashboard": {
+    "title": "管理后台",
+    "homeManage": "首页管理",
+    "homeManageDesc": "管理首页热门、精选、最新工具",
     "siteManage": "站点管理",
+    "siteManageDesc": "管理所有 AI 工具站点，编辑、发布、爬取",
     "reviewManage": "审核管理",
-    "categoryManage": "分类管理"
+    "reviewManageDesc": "审核用户提交的新站点推荐",
+    "categoryManage": "分类管理",
+    "categoryManageDesc": "管理站点分类，增删改查",
+    "trendingManage": "热门趋势管理",
+    "trendingManageDesc": "按点赞数自动排序，不可编辑",
+    "featuredManage": "精选推荐管理",
+    "featuredManageDesc": "设置精选站点，调整排序权重",
+    "latestManage": "最新上线管理",
+    "latestManageDesc": "按更新时间自动排序，不可编辑",
+    "trendingInfo": "热门趋势按点赞数自动排序，点赞数越高的站点排名越靠前。可以通过站点管理页面增加点赞数。",
+    "featuredInfo": "精选推荐按权重排序，权重越高排名越靠前。可以添加或移除精选站点。",
+    "latestInfo": "最新上线按更新时间自动排序，最近更新的站点排名越靠前。更新站点信息后会自动刷新。",
+    "currentTrending": "当前热门",
+    "currentFeatured": "当前精选",
+    "latestSites": "最新站点",
+    "addToTrending": "添加到热门",
+    "addToTrendingDesc": "通过增加点赞数提升排名",
+    "addToFeatured": "添加到精选",
+    "addToFeaturedDesc": "搜索并添加站点到精选推荐",
+    "setFeatured": "设为精选",
+    "searchSites": "搜索站点名称或URL...",
+    "weight": "权重",
+    "add": "添加",
+    "loading": "加载中...",
+    "refresh": "刷新",
+    "published": "已发布",
+    "pending": "待审核",
+    "addedToFeatured": "已添加到精选",
+    "removedFromFeatured": "已从精选移除",
+    "operationFailed": "操作失败",
+    "latestTip": "最新站点按更新时间自动排序，无需手动管理。编辑站点信息后会自动更新排序。",
+    "viewStats": "浏览统计"
   },
   "index": {
-    "slogan": "探索 10000+ AI 工具，提升你的工作效率",
-    "subtitle": "收录最全面的 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手",
+    "slogan": "探索 10000+ AI 赚钱工具，开启你的副业之路",
+    "subtitle": "收录最全面的 AI 赚钱工具、AI 副业项目、AI 自动化赚钱、AI 内容变现",
     "exploreBtn": "开始探索",
     "latestBtn": "最新AI工具",
     "featured": "精选推荐",
@@ -63,11 +99,11 @@
     "trending": "趋势搜索"
   },
   "metadata": {
-    "title": "AIGC 导航 - AI工具大全",
-    "description": "发现并探索最全面的 AI 工具，包括 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手等。免费与付费工具全覆盖。",
-    "keywords": "AI工具,AIGC,AI导航,ChatGPT,Midjourney,Claude,Gemini,Stable Diffusion,AI聊天,AI绘画,AI写作,AI编程",
-    "ogTitle": "AIGC 导航 - 探索 10000+ AI 工具",
-    "ogDescription": "发现并探索最全面的 AI 工具，包括 AI 聊天助手、AI 图像生成、AI 写作工具、AI 编程助手等。免费与付费工具全覆盖。"
+    "title": "AI赚钱导航 - AI副业工具大全",
+    "description": "发现并探索最全面的 AI 赚钱工具和副业项目，包括 AI 自动化赚钱、AI 内容变现、AI 副业工具等。助你开启 AI 赚钱之路。",
+    "keywords": "AI赚钱,AI副业,AI导航,AI变现,AI自动化,ChatGPT赚钱,AI写作赚钱,AI绘画赚钱,AI工具赚钱,AI创业",
+    "ogTitle": "AI赚钱导航 - 探索 10000+ AI 赚钱工具",
+    "ogDescription": "发现并探索最全面的 AI 赚钱工具和副业项目，包括 AI 自动化赚钱、AI 内容变现、AI 副业工具等。助你开启 AI 赚钱之路。"
   },
   "site": {
     "categories": "分类",
@@ -167,6 +203,8 @@
     "success": "成功",
     "fail": "失败",
     "new": "新建",
+    "pricing": "定价",
+    "rating": "评分",
     "dispatchFailed": "下发失败",
     "stopFailed": "停止失败",
     "dispatch": "爬取",
@@ -218,7 +256,8 @@
     "failDelete": "删除分类失败",
     "featured": "推荐",
     "edit": "编辑",
-    "delete": "删除"
+    "delete": "删除",
+    "viewSites": "查看网站"
   },
   "categoryEdit": {
     "newTitle": "新建",

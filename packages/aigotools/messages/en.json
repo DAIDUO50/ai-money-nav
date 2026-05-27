@@ -13,6 +13,7 @@
       "aiCode": "💻 AI Coding",
       "aiEnterprise": "🏢 AI Enterprise",
       "aiLearning": "📚 AI Learning",
+      "aiMoney": "💰 AI Money",
       "generalChat": "General Chat",
       "marketingCopy": "Marketing Copy",
       "academic": "Academic"
@@ -37,13 +38,48 @@
     "uploadFailed": "Upload file failed"
   },
   "dashboard": {
+    "title": "Dashboard",
+    "homeManage": "Home Manage",
+    "homeManageDesc": "Manage trending, featured, and latest tools on homepage",
     "siteManage": "Site Manage",
+    "siteManageDesc": "Manage all AI tool sites, edit, publish, crawl",
     "reviewManage": "Review Manage",
-    "categoryManage": "Category Manage"
+    "reviewManageDesc": "Review user-submitted site recommendations",
+    "categoryManage": "Category Manage",
+    "categoryManageDesc": "Manage site categories, CRUD operations",
+    "trendingManage": "Trending Manage",
+    "trendingManageDesc": "Auto-sorted by votes, not editable",
+    "featuredManage": "Featured Manage",
+    "featuredManageDesc": "Set featured sites, adjust weight",
+    "latestManage": "Latest Manage",
+    "latestManageDesc": "Auto-sorted by update time, not editable",
+    "trendingInfo": "Trending is auto-sorted by vote count. Higher votes = higher rank. Increase votes via Site Manage.",
+    "featuredInfo": "Featured is sorted by weight. Higher weight = higher rank. Add or remove featured sites.",
+    "latestInfo": "Latest is auto-sorted by update time. Recent updates rank higher. Auto-refreshes on edit.",
+    "currentTrending": "Current Trending",
+    "currentFeatured": "Current Featured",
+    "latestSites": "Latest Sites",
+    "addToTrending": "Add to Trending",
+    "addToTrendingDesc": "Increase votes to boost rank",
+    "addToFeatured": "Add to Featured",
+    "addToFeaturedDesc": "Search and add sites to featured",
+    "setFeatured": "Set Featured",
+    "searchSites": "Search site name or URL...",
+    "weight": "Weight",
+    "add": "Add",
+    "loading": "Loading...",
+    "refresh": "Refresh",
+    "published": "Published",
+    "pending": "Pending",
+    "addedToFeatured": "Added to Featured",
+    "removedFromFeatured": "Removed from Featured",
+    "operationFailed": "Operation Failed",
+    "latestTip": "Latest sites auto-sort by update time. Editing site info will refresh the order.",
+    "viewStats": "View Stats"
   },
   "index": {
-    "slogan": "Explore 10000+ AI Tools to Boost Your Productivity",
-    "subtitle": "The most comprehensive AI tools directory: Chatbots, Image Generation, Writing, Coding, and more.",
+    "slogan": "Explore 10000+ AI Money Tools to Start Your Side Hustle",
+    "subtitle": "The most comprehensive AI money-making tools directory: AI automation, content monetization, side hustles, and AI business ideas.",
     "exploreBtn": "Start Exploring",
     "latestBtn": "Latest AI Tools",
     "featured": "Featured",
@@ -63,11 +99,11 @@
     "trending": "Trending"
   },
   "metadata": {
-    "title": "AIGC Navigation - AI Tools Directory",
-    "description": "Discover and explore the most comprehensive AI tools including AI chatbots, AI image generation, AI writing tools, AI coding assistants. Free and paid tools all covered.",
-    "keywords": "AI tools,AIGC,AI navigation,ChatGPT,Midjourney,Claude,Gemini,Stable Diffusion,AI chat,AI art,AI writing,AI coding",
-    "ogTitle": "AIGC Navigation - Explore 10000+ AI Tools",
-    "ogDescription": "Discover and explore the most comprehensive AI tools including AI chatbots, AI image generation, AI writing tools, AI coding assistants. Free and paid tools all covered."
+    "title": "AI Money Navigation - AI Side Hustle Tools",
+    "description": "Discover AI tools to make money online. AI automation, content monetization, side hustle tools, and AI-powered business ideas. Start your AI money-making journey.",
+    "keywords": "AI money,AI side hustle,AI monetization,make money with AI,ChatGPT business,AI content creation,AI automation,AI entrepreneurship",
+    "ogTitle": "AI Money Navigation - Explore 10000+ AI Money Tools",
+    "ogDescription": "Discover AI tools to make money online. AI automation, content monetization, side hustle tools, and AI-powered business ideas. Start your AI money-making journey."
   },
   "site": {
     "categories": "Categories",
@@ -167,6 +203,8 @@
     "success": "Success",
     "fail": "Fail",
     "new": "New",
+    "pricing": "Pricing",
+    "rating": "Rating",
     "dispatchFailed": "Dispatch Failed",
     "stopFailed": "Stop Failed",
     "dispatch": "Dispatch",
@@ -218,7 +256,8 @@
     "failDelete": "Delete category failed",
     "featured": "Featured",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "viewSites": "View Sites"
   },
   "categoryEdit": {
     "newTitle": "New",

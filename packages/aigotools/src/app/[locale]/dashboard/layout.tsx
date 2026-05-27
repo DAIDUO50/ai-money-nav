@@ -1,72 +1,62 @@
 "use client";
-import { UserButton } from "@clerk/nextjs";
+
+import { usePathname } from "next/navigation";
+import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
-import clsx from "clsx";
+import { LayoutDashboard, Globe, Tags, FileCheck } from "lucide-react";
+import ViewStatsPanel from "@/components/common/browsing-history-panel";
 
-import Logo from "@/components/common/logo";
-import { ThemeSwitcher } from "@/components/common/theme-switcher";
-import { Link, usePathname } from "@/navigation";
-import LanguageSwitcher from "@/components/common/language-switcher";
+import { Flame, Star, Clock } from "lucide-react";
 
-export default function DashbpardLayout({
+const navItems = [
+  { key: "homeManage", href: "/dashboard/home-manage", icon: LayoutDashboard },
+  { key: "siteManage", href: "/dashboard/site-manage", icon: Globe },
+  { key: "categoryManage", href: "/dashboard/category-manage", icon: Tags },
+  { key: "reviewManage", href: "/dashboard/review-manage", icon: FileCheck },
+];
+
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   const t = useTranslations("dashboard");
-
-  const menus = [
-    {
-      title: t("siteManage"),
-      link: "/dashboard/site-manage",
-    },
-    {
-      title: t("reviewManage"),
-      link: "/dashboard/review-manage",
-    },
-    {
-      title: t("categoryManage"),
-      link: "/dashboard/category-manage",
-    },
-  ];
+  const pathname = usePathname();
 
   return (
-    <div className="flex w-screen h-screen">
-      <div className="flex-shrink-0 flex-grow-0 basis-48 h-full p-6 border-r-1 border-primary-300 flex flex-col">
-        <Logo />
-
-        <div className="flex-shrink-0 flex-grow-0 basis-[2px] my-10 bg-gradient-to-r from-primary-300 via-primary-900 to-primary-300 rounded-[999px/10px]" />
-
-        <div className="flex-1 px-1 text-primary-600 space-y-3">
-          {menus.map((menu, index) => {
-            const active = pathname === menu.link;
-
-            return (
-              <Link
-                key={index}
-                className={clsx(
-                  "px-4 py-2 rounded-lg bg-primary-100 text-sm font-semibold hover:bg-primary-200 hover:text-primary-800 cursor-pointer transition-all",
-                  "block",
-                  {
-                    "!bg-primary !text-primary-foreground": active,
-                  },
-                )}
-                href={menu.link}
-              >
-                {menu.title}
-              </Link>
-            );
-          })}
+    <div className="min-h-screen flex">
+      {/* Sidebar */}
+      <aside className="w-56 border-r border-default-200 bg-default-50 p-4 flex flex-col gap-1">
+        <div className="flex items-center gap-2 px-3 py-4 mb-2">
+          <LayoutDashboard size={20} className="text-primary-500" />
+          <span className="font-bold text-sm">{t("title")}</span>
         </div>
-        <div className="flex items-center justify-between mt-6 gap-2">
-          <UserButton />
-          <div className="flex-1" />
-          <LanguageSwitcher />
-          <ThemeSwitcher />
+        {navItems.map((item) => {
+          const isActive = pathname.includes(item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
+                isActive
+                  ? "bg-primary-100 text-primary-600 font-medium"
+                  : "text-default-600 hover:bg-default-100"
+              }`}
+            >
+              <item.icon size={16} />
+              {t(item.key)}
+            </Link>
+          );
+        })}
+
+        {/* 浏览统计面板 - 固定在底部 */}
+        <div className="mt-auto pt-4">
+          <ViewStatsPanel />
         </div>
-      </div>
-      <main className="flex-1 overflow-auto">{children}</main>
+      </aside>
+
+      {/* Main content */}
+      <main className="flex-1 p-6 overflow-auto">{children}</main>
     </div>
   );
 }

@@ -3,11 +3,6 @@ import { useForm } from "react-hook-form";
 import {
   Button,
   Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
   Select,
   SelectItem,
   Switch,
@@ -41,29 +36,24 @@ export default function SiteEdit({
 
   const formValues = watch();
 
-  const [isOpen, setIsOpen] = useState(false);
-
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     reset(site);
-    setIsOpen(!!site);
   }, [reset, site]);
 
   const onSubmit = useCallback(async () => {
-    if (saving) {
-      return;
-    }
+    if (saving) return;
+
     try {
-      if (!(await trigger("url"))) {
-        return;
-      }
+      if (!(await trigger("url"))) return;
+
       setSaving(true);
       const values = getValues();
 
-      const site = await saveSite(values);
+      const savedSite = await saveSite(values);
 
-      if (!site) {
+      if (!savedSite) {
         toast.error(t("saveFailed"));
       } else {
         onClose();
@@ -90,62 +80,82 @@ export default function SiteEdit({
     initialData: [],
   });
 
+  // If no site is selected, don't render anything
+  if (!site) return null;
+
   return (
-    <Modal
-      isOpen={isOpen}
-      size="5xl"
-      onClose={() => {
-        setIsOpen(false);
-        onClose();
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
       }}
     >
-      <ModalContent>
-        <ModalHeader>
-          {site?._id ? t("updateTitle") : t("newTitle")}
-        </ModalHeader>
-        <ModalBody>
-          <form className="grid grid-cols-2 gap-4 max-h-[65vh] pb-1 overflow-auto">
+      <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl w-full max-w-5xl max-h-[85vh] flex flex-col m-4">
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-zinc-700">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {site._id ? t("updateTitle") : t("newTitle")}
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors text-2xl leading-none"
+          >
+            ×
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="flex-1 overflow-auto px-6 py-4">
+          <form
+            className="grid grid-cols-2 gap-4"
+            onSubmit={(e) => e.preventDefault()}
+          >
             <Input
               isRequired
               label={t("url")}
               size="sm"
-              value={formValues.url}
-              {...register("url", {
-                required: true,
-              })}
+              value={formValues.url || ""}
+              {...register("url", { required: true })}
               color={formState.errors.url ? "danger" : "default"}
             />
             <Input
               label={t("name")}
               size="sm"
-              value={formValues.name}
+              value={formValues.name || ""}
               {...register("name")}
             />
             <Input
               label={t("pricingType")}
               size="sm"
-              value={formValues.pricingType}
+              value={formValues.pricingType || ""}
               {...register("pricingType")}
             />
             <div className="flex items-center justify-between py-3 rounded-lg px-3 bg-primary-100">
-              <label className="text-sm"> {t("featured")}</label>
+              <label className="text-sm">{t("featured")}</label>
               <Switch
-                checked={formValues.featured}
+                checked={!!formValues.featured}
                 size="sm"
-                {...register("featured")}
+                onValueChange={(val) => setValue("featured", val)}
               />
             </div>
             <Input
               label={t("weight")}
               size="sm"
-              value={formValues.weight as unknown as any}
-              onValueChange={(value) => {
-                setValue("weight", parseInt(value, 10));
-              }}
+              value={String(formValues.weight ?? "")}
+              onValueChange={(value) =>
+                setValue("weight", parseInt(value, 10))
+              }
             />
             <Select
               label={t("categories")}
-              selectedKeys={formValues.categories}
+              selectedKeys={
+                (formValues.categories && Array.isArray(formValues.categories)
+                  ? formValues.categories
+                  : formState.defaultValues?.categories
+                    ? [formState.defaultValues.categories]
+                    : []
+                ).filter((k): k is string => !!k)
+              }
               selectionMode="multiple"
               size="sm"
               onSelectionChange={(value) => {
@@ -155,88 +165,63 @@ export default function SiteEdit({
                 );
               }}
             >
-              {categories.map((category) => {
-                return (
-                  <SelectItem key={category._id}>{category.name}</SelectItem>
-                );
-              })}
+              {categories.map((category: any) => (
+                <SelectItem key={category._id}>{category.name}</SelectItem>
+              ))}
             </Select>
+
             <ArrowInput
               label={t("features")}
-              value={formValues.features}
-              onChange={(value) => {
-                setValue("features", value);
-              }}
+              value={formValues.features || []}
+              onChange={(value) => setValue("features", value)}
             />
             <ArrowInput
               label={t("pricings")}
-              value={formValues.pricings}
-              onChange={(value) => {
-                setValue("pricings", value);
-              }}
+              value={formValues.pricings || []}
+              onChange={(value) => setValue("pricings", value)}
             />
             <LinksInput
-              value={formValues.links}
-              onChange={(value) => {
-                setValue("links", value);
-              }}
+              value={formValues.links || []}
+              onChange={(value) => setValue("links", value)}
             />
             <ArrowInput
               label={t("usecases")}
-              value={formValues.usecases}
-              onChange={(value) => {
-                setValue("usecases", value);
-              }}
+              value={formValues.usecases || []}
+              onChange={(value) => setValue("usecases", value)}
             />
             <ArrowInput
               label={t("relatedSearches")}
-              value={formValues.relatedSearches}
-              onChange={(value) => {
-                setValue("relatedSearches", value);
-              }}
+              value={formValues.relatedSearches || []}
+              onChange={(value) => setValue("relatedSearches", value)}
             />
             <ArrowInput
               label={t("users")}
-              value={formValues.users}
-              onChange={(value) => {
-                setValue("users", value);
-              }}
+              value={formValues.users || []}
+              onChange={(value) => setValue("users", value)}
             />
             <SingleImageUpload
               label={t("snapshot")}
-              value={formValues.snapshot}
-              onChange={(value) => {
-                setValue("snapshot", value);
-              }}
+              value={formValues.snapshot || ""}
+              onChange={(value) => setValue("snapshot", value)}
             />
-            {/* <MultiImageUpload
-              label={t("images")}
-              value={formValues.images}
-              onChange={(value) => {
-                setValue("images", value);
-              }}
-            /> */}
 
             <Textarea
               label={t("description")}
               size="sm"
-              value={formValues.description}
+              value={formValues.description || ""}
               {...register("description")}
               className="col-span-2"
             />
           </form>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="primary"
-            isLoading={saving}
-            size="sm"
-            onClick={onSubmit}
-          >
+        </div>
+
+        {/* Footer */}
+        <div className="flex justify-end px-6 py-4 border-t border-gray-200 dark:border-zinc-700">
+          <Button color="primary" isLoading={saving} size="sm" onClick={onSubmit}>
             {t("save")}
           </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+        </div>
+      </div>
+    </div>
   );
 }

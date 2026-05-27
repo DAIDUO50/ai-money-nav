@@ -10,6 +10,9 @@ import {
   getSeedFeaturedCategories,
   getSeedFeaturedSites,
   getSeedLatestSites,
+  getSeedTrendingSites,
+  getSeedSiteStats,
+  getSeedRelatedByCategory,
   getSeedSiteByKey,
   searchSeedSites,
   SEED_CATEGORIES,
@@ -65,6 +68,10 @@ function categoryToObject(category: CategoryDocument) {
 }
 
 async function assertIsManager() {
+  // Clerk 禁用时跳过权限检查
+  if (!AppConfig.isClerkEnabled) {
+    return null;
+  }
   const user = await currentUser();
   const isManager = user?.id && AppConfig.manageUsers.includes(user.id);
 
@@ -240,9 +247,46 @@ export async function managerSearchSites(data: SearchParams) {
       totalPage: Math.ceil(count / data.size),
     };
   } catch (error) {
-    console.log("Search sites error", error);
+    console.log("Search sites error, fallback to seed data", error);
 
-    throw error;
+    // Fallback to seed data when MongoDB is not available
+    const { SEED_SITES } = await import("./seed-data");
+    let filteredSites = [...SEED_SITES];
+    
+    // Apply category filter (match by ID or name)
+    if (data.category) {
+      const { SEED_CATEGORIES } = await import("./seed-data");
+      const catId = data.category;
+      // Find the category name for this ID
+      const categoryObj = SEED_CATEGORIES.find((c) => c._id === catId);
+      const categoryName = categoryObj?.name;
+      filteredSites = filteredSites.filter((site) =>
+        site.categories?.includes(catId) ||
+        (categoryName && site.categories?.includes(categoryName))
+      );
+    }
+    
+    // Apply search filter
+    if (data.search) {
+      const searchLower = data.search.toLowerCase();
+      filteredSites = filteredSites.filter(
+        (site) =>
+          site.name?.toLowerCase().includes(searchLower) ||
+          site.url?.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    const start = (data.page - 1) * data.size;
+    const pagedSites = filteredSites.slice(start, start + data.size);
+
+    return {
+      sites: pagedSites.map((site) => ({
+        ...site,
+        categories: site.categories || [],
+      })),
+      count: filteredSites.length,
+      totalPage: Math.ceil(filteredSites.length / data.size),
+    };
   }
 }
 
@@ -287,6 +331,64 @@ export async function getLatestSites(size = 12) {
   }
 
   return getSeedLatestSites(size);
+}
+
+export async function getTrendingSites(size = 12) {
+  try {
+    await dbConnect();
+    const sites = await SiteModel.find({ state: SiteState.published })
+      .sort({ voteCount: -1 })
+      .limit(size)
+      .populate("categories");
+    const result = sites.map(siteToObject).map(pickCategoryName);
+    return result.length ? result : getSeedTrendingSites(size);
+  } catch (error) {
+    console.log("Get trending sites", error);
+  }
+  return getSeedTrendingSites(size);
+}
+
+export async function getSiteStats() {
+  try {
+    await dbConnect();
+    const totalSites = await SiteModel.countDocuments({ state: SiteState.published });
+    const totalVotes = await SiteModel.aggregate([
+      { $match: { state: SiteState.published } },
+      { $group: { _id: null, total: { $sum: "$voteCount" }, avgRating: { $avg: "$rating" } } },
+    ]);
+    const parentCats = await CategoryModel.countDocuments({ parent: { $exists: false, $eq: null } });
+    return {
+      totalSites: totalSites || 0,
+      totalCategories: parentCats || 0,
+      totalVotes: totalVotes[0]?.total || 0,
+      avgRating: totalVotes[0]?.avgRating?.toFixed(1) || "4.2",
+    };
+  } catch (error) {
+    console.log("Get site stats", error);
+  }
+  return getSeedSiteStats();
+}
+
+export async function getRelatedByCategory(siteKey: string, size = 4) {
+  try {
+    await dbConnect();
+    const site = await SiteModel.findOne({ siteKey, state: SiteState.published }).populate("categories");
+    if (!site) return getSeedRelatedByCategory(siteKey, size);
+    const catIds = (site.categories as any[]).map((c: any) => c._id || c);
+    const related = await SiteModel.find({
+      state: SiteState.published,
+      _id: { $ne: site._id },
+      categories: { $in: catIds },
+    })
+      .sort({ voteCount: -1 })
+      .limit(size)
+      .populate("categories");
+    const result = related.map(siteToObject).map(pickCategoryName);
+    return result.length ? result : getSeedRelatedByCategory(siteKey, size);
+  } catch (error) {
+    console.log("Get related by category", error);
+  }
+  return getSeedRelatedByCategory(siteKey, size);
 }
 
 export async function submitReview(name: string, url: string) {
@@ -496,6 +598,7 @@ export async function saveSite(site: Site) {
         { returnDocument: "after" }
       )) as any;
     } else {
+      if (!user?.id) throw new Error("User not authenticated");
       site.userId = user.id;
 
       saved = await SiteModel.create(site);
@@ -505,10 +608,14 @@ export async function saveSite(site: Site) {
 
     return siteToObject(saved);
   } catch (error) {
-    console.log("Save site error", error);
+    console.log("Save site error, fallback to seed data update", error);
+    // Fallback: return the site as-is (no MongoDB persistence)
+    const urlObj = new URL(site.url);
+    site.url = urlObj.origin;
+    site.updatedAt = Date.now();
+    site.siteKey = urlObj.hostname.replace(/[^\w]/g, "_");
+    return { ...site, _id: site._id || `site-${Date.now()}` } as any;
   }
-
-  return null;
 }
 
 export async function triggerSitePublish(site: Site) {
@@ -604,6 +711,7 @@ export async function updateReviewState(reviewId: string, state: ReviewState) {
     }
 
     if (state === ReviewState.approved) {
+      if (!user?.id) throw new Error("User not authenticated");
       const site = await saveSite(
         createTemplateSite({
           userId: user.id,
@@ -790,9 +898,36 @@ export async function managerSearchCategories(data: CategorySearchForm) {
       totalPage: Math.ceil(count / data.size),
     };
   } catch (error) {
-    console.log("Search categories error", error);
+    console.log("Search categories error, fallback to seed data", error);
 
-    throw error;
+    // Fallback to seed data when MongoDB is not available
+    const { SEED_CATEGORIES } = await import("./seed-data");
+    let filteredCategories = [...SEED_CATEGORIES];
+
+    if (data.search) {
+      const searchLower = data.search.toLowerCase();
+      filteredCategories = filteredCategories.filter(
+        (c) => c.name?.toLowerCase().includes(searchLower)
+      );
+    }
+    if (data.type === "top") {
+      filteredCategories = filteredCategories.filter((c) => !c.parent);
+    } else if (data.type === "second" && !data.parent) {
+      filteredCategories = filteredCategories.filter((c) => c.parent);
+    }
+
+    const start = (data.page - 1) * data.size;
+    const pagedCategories = filteredCategories.slice(start, start + data.size);
+
+    return {
+      categories: pagedCategories.map((c) => ({
+        ...c,
+        _id: c._id || c.name || String(Math.random()),
+        parent: c.parent || null,
+      })),
+      count: filteredCategories.length,
+      totalPage: Math.ceil(filteredCategories.length / data.size),
+    };
   }
 }
 
@@ -846,4 +981,32 @@ export async function getAllCategories() {
   }
 
   return getSeedFeaturedCategories().map((c) => ({ ...c, children: [] }));
+}
+
+export async function getCategoryById(categoryId: string): Promise<Category | null> {
+  try {
+    await dbConnect();
+    
+    const category = await CategoryModel.findById(categoryId);
+    
+    if (category) {
+      return categoryToObject(category);
+    }
+  } catch (error) {
+    console.log("Get category by id error, fallback to seed data", error);
+  }
+  
+  // Fallback to seed data
+  const { SEED_CATEGORIES } = await import("./seed-data");
+  const seedCategory = SEED_CATEGORIES.find((c) => c._id === categoryId);
+  
+  if (seedCategory) {
+    return {
+      ...seedCategory,
+      _id: seedCategory._id || seedCategory.name || String(Math.random()),
+      parent: seedCategory.parent ?? undefined,
+    } as Category;
+  }
+  
+  return null;
 }

@@ -12,11 +12,11 @@ export default function SingleImageUpload({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="bg-primary-100 px-3 py-2 rounded-lg ">
+    <div className="bg-primary-100 px-3 py-2 rounded-lg col-span-2">
       <div className="flex items-center justify-between">
-        <span className="text-sm">{label}</span>
+        <span className="text-sm font-medium">{label}</span>
       </div>
-      <div className={clsx("mt-3 mb-3 space-y-2")}>
+      <div className={clsx("mt-3 mb-3")}>
         <ImageUpload
           value={value}
           onChange={(src) => {
@@ -24,6 +24,9 @@ export default function SingleImageUpload({
           }}
         />
       </div>
+      {value && (
+        <p className="text-xs text-gray-500 mt-1 break-all">{value}</p>
+      )}
     </div>
   );
 }
