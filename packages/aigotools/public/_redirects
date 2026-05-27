@@ -1,0 +1,3 @@
+# Netlify redirects for Next.js with next-intl
+# Root path redirects to /cn (default locale)
+/ /cn 302
