@@ -1,5 +1,7 @@
 # aigo.tools
 
+> AI赚钱导航 - 部署于 Netlify 🚀
+
 ## 后端接口
 
 - 获取featured列表
